@@ -1,11 +1,11 @@
 export const steps = [
-    {
-      title: 'Basic details'
-    },
-    {
-      title: 'Select Questions'
-    },
-    {
-      title: 'Finalize'
-    }
+  {
+    title: "Basic details",
+  },
+  {
+    title: "Select Questions",
+  },
+  {
+    title: "Finalize",
+  },
 ];

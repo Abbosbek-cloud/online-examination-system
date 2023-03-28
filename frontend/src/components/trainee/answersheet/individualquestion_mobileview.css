@@ -1,6 +1,5 @@
-@media only screen   
-and (max-device-width : 720px)  
-{
-.ant-col-20{
-padding-left:20px; }	 
+@media only screen and (max-device-width: 720px) {
+  .ant-col-20 {
+    padding-left: 20px;
+  }
 }
