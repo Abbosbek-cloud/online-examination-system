@@ -55,23 +55,26 @@ let traineeenter = (req, res, next) => {
               tempdata
                 .save()
                 .then((u) => {
-                  sendmail(
-                    emailid,
-                    "Registered Successfully",
-                    `You have been successfully registered for the test. Click on the link given to take test  "${
-                      req.protocol + "://" + req.get("host")
-                    }/trainee/taketest?testid=${testid}&traineeid=${u._id}"`
-                  )
-                    .then((dd) => {
-                      console.log(dd);
-                    })
-                    .catch((errr) => {
-                      console.log(errr);
-                    });
+                  // sendmail(
+                  //   emailid,
+                  //   "Registered Successfully",
+                  //   `You have been successfully registered for the test. Click on the link given to take test  "${
+                  //     req.protocol + "://" + req.get("host")
+                  //   }/trainee/taketest?testid=${testid}&traineeid=${u._id}"`
+                  // )
+                  //   .then((dd) => {
+                  //     console.log(dd);
+                  //   })
+                  //   .catch((errr) => {
+                  //     console.log(errr);
+                  //   });
                   res.json({
                     success: true,
                     message: `Trainee registered successfully!`,
                     user: u,
+                    msg: `You have been successfully registered for the test. Click on the link given to take test  "${
+                      req.protocol + "://" + req.get("host")
+                    }/trainee/taketest?testid=${testid}&traineeid=${u._id}"`,
                   });
                 })
                 .catch((err) => {
@@ -212,22 +215,24 @@ let resendmail = (req, res, next) => {
   TraineeEnterModel.findById(userid, { emailid: 1, testid: 1 }).then((info) => {
     if (info) {
       console.log(info);
-      sendmail(
-        info.emailid,
-        "Registered Successfully",
-        `You have been successfully registered for the test. Click on the link given to take test  "${
-          req.protocol + "://" + req.get("host")
-        }/trainee/taketest?testid=${info.testid}&traineeid=${info._id}"`
-      )
-        .then((dd) => {
-          console.log(dd);
-        })
-        .catch((errr) => {
-          console.log(errr);
-        });
+      // sendmail(
+      //   info.emailid,
+      //   "Registered Successfully",
+      //   `You have been successfully registered for the test. Click on the link given to take test  "${
+      //     req.protocol + "://" + req.get("host")
+      //   }/trainee/taketest?testid=${info.testid}&traineeid=${info._id}"`
+      // )
+      //   .then((dd) => {
+      //     console.log(dd);
+      //   })
+      //   .catch((errr) => {
+      //     console.log(errr);
+      //   });
       res.json({
         success: true,
-        message: `Link sent successfully!`,
+        message: `You have been successfully registered for the test. Click on the link given to take test  "${
+          req.protocol + "://" + req.get("host")
+        }/trainee/taketest?testid=${info.testid}&traineeid=${info._id}"`,
       });
     } else {
       res.json({
@@ -291,7 +296,7 @@ let Answersheet = (req, res, next) => {
     .then((info) => {
       if (info[0].length && info[1].length) {
         AnswersheetModel.find({ userid: userid, testid: testid }).then(
-          (data) => {
+          async (data) => {
             if (data.length) {
               res.json({
                 success: true,
@@ -307,38 +312,37 @@ let Answersheet = (req, res, next) => {
                   userid: userid,
                 };
               });
-              AnswersModel.insertMany(answer, (err, ans) => {
-                if (err) {
-                  console.log(err);
-                  res.status(500).json({
-                    success: false,
-                    message: "Unable to create Answersheet!",
-                  });
-                } else {
-                  var startTime = new Date();
-                  var tempdata = AnswersheetModel({
-                    startTime: startTime,
-                    questions: qus,
-                    answers: ans,
-                    testid: testid,
-                    userid: userid,
-                  });
-                  tempdata
-                    .save()
-                    .then((Answersheet) => {
-                      res.json({
-                        success: true,
-                        message: "Test has started!",
-                      });
-                    })
-                    .catch((error) => {
-                      res.status(500).json({
-                        success: false,
-                        message: "Unable to fetch details",
-                      });
+              let ansewersx = await AnswersModel.insertMany(answer);
+
+              if (!ansewersx) {
+                res.status(500).json({
+                  success: false,
+                  message: "Unable to create Answersheet!",
+                });
+              } else {
+                var startTime = new Date();
+                var tempdata = AnswersheetModel({
+                  startTime: startTime,
+                  questions: qus,
+                  answers: ansewersx,
+                  testid: testid,
+                  userid: userid,
+                });
+                tempdata
+                  .save()
+                  .then((Answersheet) => {
+                    res.json({
+                      success: true,
+                      message: "Test has started!",
                     });
-                }
-              });
+                  })
+                  .catch((error) => {
+                    res.status(500).json({
+                      success: false,
+                      message: "Unable to fetch details",
+                    });
+                  });
+              }
             }
           }
         );

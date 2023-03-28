@@ -104,7 +104,6 @@ class SingleQuestion extends React.Component {
       });
     //save to cloud then
   };
-
   previous = () => {
     if (this.props.trainee.activeQuestionIndex > 0) {
       this.props.switchQuestion(this.props.trainee.activeQuestionIndex - 1);

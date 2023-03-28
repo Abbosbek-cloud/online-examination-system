@@ -32,9 +32,10 @@ let generateResults = (req, res, next) => {
 let gresult = (uid, tid) => {
   return new Promise(async (resolve, reject) => {
     const ansMap = ["A", "B", "C", "D", "E"];
-    let results = ResultModel.findOne({ userid: uid, testid: tid })
+    let results = await ResultModel.findOne({ userid: uid, testid: tid })
       .populate("result")
       .exec();
+    console.log("results", results);
 
     if (!results) {
       let answersheet = await AnswersheetModel.findOne(
