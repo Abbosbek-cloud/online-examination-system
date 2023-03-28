@@ -1,9 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var userservice  = require("../services/user");
+var userservice = require("../services/user");
 
-router.get('/details',userservice.userdetails);
+router.get("/details", userservice.userdetails);
 
-
-
-module.exports=router;
+module.exports = router;

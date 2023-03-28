@@ -1,5 +1,3 @@
 var mongoose = require("mongoose");
 
-var traineetestschema = new mongoose.Schema({
-    
-})
+var traineetestschema = new mongoose.Schema({});

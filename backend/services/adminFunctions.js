@@ -147,7 +147,6 @@ let getAllTrainers = (req, res, next) => {
       { password: 0, type: 0, createdBy: 0, status: 0 }
     )
       .then((info) => {
-        
         res.status(200).json({
           success: true,
           message: `Success`,
