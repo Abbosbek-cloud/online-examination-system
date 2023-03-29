@@ -14,7 +14,7 @@ class TraineeRegisterForm extends Component {
       inform: true,
       testid: null,
       user: null,
-      msg: null,
+      userInfo: null,
     };
   }
 
@@ -49,7 +49,7 @@ class TraineeRegisterForm extends Component {
               this.setState({
                 inform: false,
                 user: data.data.user,
-                msg: data.data.msg,
+                userInfo: data.data.userInfo,
               });
             } else {
               this.props.form.resetFields();
@@ -75,7 +75,7 @@ class TraineeRegisterForm extends Component {
       .then((response) => {
         if (response.data.success) {
           this.setState({
-            msg: response.data.message,
+            userInfo: response.data.userInfo,
           });
           Alert("success", "Success!", "Email has been sent to your email");
         } else {
@@ -224,9 +224,18 @@ class TraineeRegisterForm extends Component {
         ) : (
           <div className="reasendmail-container-register">
             <Title style={{ color: "#fff" }} level={4}>
-              {this.state.msg
-                ? this.state.msg
-                : 'If you do not see any link for your test! Please click "Resend Mail" button'}
+              Quyidagi link orqali testga o&apos;tishingiz mumkin!
+              <a
+                href={`${
+                  this.state.userInfo.protocol +
+                  "://" +
+                  this.state.userInfo.host
+                }/trainee/taketest?testid=${
+                  this.state.userInfo.testId
+                }&traineeid=${this.state.userInfo.userId}`}
+              >
+                Testni boshlash
+              </a>
             </Title>
             <Button type="primary" onClick={this.resendMail}>
               Resend Mail

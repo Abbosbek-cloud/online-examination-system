@@ -72,9 +72,12 @@ let traineeenter = (req, res, next) => {
                     success: true,
                     message: `Trainee registered successfully!`,
                     user: u,
-                    msg: `You have been successfully registered for the test. Click on the link given to take test  "${
-                      req.protocol + "://" + req.get("host")
-                    }/trainee/taketest?testid=${testid}&traineeid=${u._id}"`,
+                    userInfo: {
+                      userId: u._id,
+                      host: req.get("host"),
+                      protocol: req.protocol,
+                      testId: testid,
+                    },
                   });
                 })
                 .catch((err) => {
@@ -230,9 +233,12 @@ let resendmail = (req, res, next) => {
       //   });
       res.json({
         success: true,
-        message: `You have been successfully registered for the test. Click on the link given to take test  "${
-          req.protocol + "://" + req.get("host")
-        }/trainee/taketest?testid=${info.testid}&traineeid=${info._id}"`,
+        userInfo: {
+          userId: info._id,
+          host: req.get("host"),
+          protocol: req.protocol,
+          testId: info.testid,
+        },
       });
     } else {
       res.json({

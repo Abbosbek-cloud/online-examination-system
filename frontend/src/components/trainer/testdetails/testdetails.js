@@ -44,6 +44,9 @@ class TestDetails extends Component {
       data: {
         id: this.state.id,
       },
+      params: {
+        _id: this.state.id,
+      },
     });
     var p2 = SecurePost({
       url: apis.GET_STATS,
@@ -114,7 +117,7 @@ class TestDetails extends Component {
       );
     } else {
       let { testdetails, id } = this.state;
-      console.log(testdetails);
+      console.log("detail", testdetails);
       return (
         <div>
           <Tabs defaultActiveKey="1" onChange={(e) => this.tabChange(e)}>

@@ -124,6 +124,7 @@ let getSingletest = async (req, res, next) => {
       },
     })
     .exec();
+
   if (!testpaper) {
     console.log(err);
     res.status(500).json({
@@ -131,6 +132,7 @@ let getSingletest = async (req, res, next) => {
       message: "Unable to fetch data",
     });
   } else {
+    console.log("test", testpaper);
     res.json({
       success: true,
       message: `Success`,
@@ -210,10 +212,11 @@ let deleteTest = (req, res, next) => {
   }
 };
 
-let TestDetails = async (req, res, next) => {
+const TestDetails = async (req, res, next) => {
+  console.log("tests is giving");
   if (req.user.type === "TRAINER") {
     let testid = req.body.id;
-    let tests = TestPaperModel.findOne(
+    let tests = await TestPaperModel.findOne(
       { _id: testid, createdBy: req.user._id },
       {
         isResultgenerated: 0,
@@ -226,7 +229,7 @@ let TestDetails = async (req, res, next) => {
     )
       .populate("subjects", "topic")
       .exec();
-
+    console.log(tests);
     if (!tests) {
       res.json({
         success: false,

@@ -5,8 +5,8 @@ var testpaper = require("../services/testpaper");
 
 router.post("/new/name/check", testpaper.checkTestName);
 router.post("/create", testpaper.createEditTest);
-router.get("/details/:_id", testpaper.getSingletest);
 router.post("/details/all", testpaper.getAlltests);
+router.get("/details/:_id", testpaper.getSingletest);
 router.post("/delete", testpaper.deleteTest);
 router.post("/basic/details", testpaper.basicTestdetails);
 router.post("/questions", testpaper.getTestquestions);
