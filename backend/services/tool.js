@@ -28,6 +28,8 @@ var createadmin = () => {
     });
 };
 
+// changed
+
 var hashPassword = (password) => {
   return new Promise((resolve, reject) => {
     bcrypt
